@@ -1,8 +1,11 @@
 /* eslint-disable*/
-import { useState } from "react";
+import { useRef, useState } from "react";
 import styled from "styled-components";
 
 const DiaryEditor = () => {
+  const authorInput = useRef<HTMLInputElement>(null);
+  const contentInput = useRef<HTMLTextAreaElement>(null);
+
   const [state, setState] = useState({
     author: "",
     content: "",
@@ -21,7 +24,14 @@ const DiaryEditor = () => {
   };
 
   const hadleSubmit = () => {
-    console.log(state);
+    if (state.author.length < 1 && authorInput.current !== null) {
+      authorInput.current.focus();
+      return;
+    }
+    if (state.content.length < 5 && contentInput.current !== null) {
+      contentInput.current.focus();
+      return;
+    }
     alert("일기 저장 완료");
   };
 
@@ -30,6 +40,7 @@ const DiaryEditor = () => {
       <h2>오늘의 일기</h2>
       <div>
         <DiaryEditor_input
+          ref={authorInput}
           name="author"
           value={state.author}
           onChange={handleChangeState}
@@ -37,6 +48,7 @@ const DiaryEditor = () => {
       </div>
       <div>
         <DiaryEditor_textarea
+          ref={contentInput}
           name="content"
           value={state.content}
           onChange={handleChangeState}
@@ -83,6 +95,7 @@ const DiaryEditor_textarea = styled.textarea`
   margin-bottom: 20px;
   width: 500px;
   padding: 10px;
+  height: 150px;
 `;
 
 const DiaryEditor_select = styled.select`
