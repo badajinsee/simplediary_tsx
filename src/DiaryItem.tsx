@@ -2,14 +2,12 @@
 import styled from "styled-components";
 
 import { Diary } from "./types";
+import { DiaryActions } from "./types";
 import { useRef, useState } from "react";
 
-interface DiaryProps extends Diary {
-  onRemove: (targetId: number) => void;
-  onEdit: (targetId: number, newContent: string) => void;
-}
+interface DiaryItemProps extends Diary, DiaryActions {}
 
-const DiaryItem = (props: DiaryProps) => {
+const DiaryItem = (props: DiaryItemProps) => {
   // 기본값을 false로
   const [isEdit, setIsEdit] = useState(false);
 

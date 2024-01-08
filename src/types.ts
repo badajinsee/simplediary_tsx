@@ -5,3 +5,8 @@ export interface Diary {
   emotion: number;
   created_date: number;
 }
+
+export interface DiaryActions {
+  onRemove: (targetId: number) => void;
+  onEdit: (targetId: number, newContent: string) => void;
+}

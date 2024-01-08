@@ -3,11 +3,10 @@ import styled from "styled-components";
 
 import DiaryItem from "./DiaryItem";
 import { Diary } from "./types";
+import { DiaryActions } from "./types";
 
-interface DiaryListProps {
+interface DiaryListProps extends DiaryActions {
   diaryList: Diary[];
-  onRemove: (targetId: number) => void;
-  onEdit: (targetId: number, newContent: string) => void;
 }
 
 const Diarylist = ({ diaryList, onRemove, onEdit }: DiaryListProps) => {
