@@ -1,8 +1,13 @@
 /* eslint-disable*/
+import React from "react";
 import { useRef, useState } from "react";
 import styled from "styled-components";
 
-const DiaryEditor = () => {
+type DiaryEditorProps = {
+  onCreate: (author: string, content: string, emotion: number) => void;
+};
+
+const DiaryEditor: React.FC<DiaryEditorProps> = ({ onCreate }) => {
   const authorInput = useRef<HTMLInputElement>(null);
   const contentInput = useRef<HTMLTextAreaElement>(null);
 
@@ -32,7 +37,13 @@ const DiaryEditor = () => {
       contentInput.current.focus();
       return;
     }
+    onCreate(state.author, state.content, state.emotion);
     alert("일기 저장 완료");
+    setState({
+      author: "",
+      content: "",
+      emotion: 1,
+    });
   };
 
   return (
