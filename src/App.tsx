@@ -1,9 +1,11 @@
 /* eslint-disable*/
 import { useRef, useState } from "react";
-import "./App.css";
 
+import "./App.css";
 import DiaryEditor from "./DiaryEditor";
 import DiaryList from "./DiaryList";
+import LifeCycle from "./Lifecycycle";
+
 import { Diary } from "./types";
 
 // const dummyList = [
@@ -64,6 +66,7 @@ function App() {
 
   return (
     <div className="App">
+      <LifeCycle />
       <DiaryEditor onCreate={onCreate} />
       <DiaryList onEdit={onEdit} onRemove={onRemove} diaryList={data} />
     </div>
