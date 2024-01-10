@@ -1,6 +1,5 @@
 /* eslint-disable*/
-import React from "react";
-import { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 type DiaryEditorProps = {
@@ -8,6 +7,10 @@ type DiaryEditorProps = {
 };
 
 const DiaryEditor: React.FC<DiaryEditorProps> = ({ onCreate }) => {
+  useEffect(() => {
+    console.log("diaryeditior 랜더");
+  });
+
   const authorInput = useRef<HTMLInputElement>(null);
   const contentInput = useRef<HTMLTextAreaElement>(null);
 
@@ -88,7 +91,7 @@ const DiaryEditor: React.FC<DiaryEditorProps> = ({ onCreate }) => {
   );
 };
 
-export default DiaryEditor;
+export default React.memo(DiaryEditor);
 
 const DiaryEditor_whole = styled.div`
   border: 1px solid gray;

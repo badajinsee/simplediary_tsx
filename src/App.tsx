@@ -1,5 +1,5 @@
 /* eslint-disable*/
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import "./App.css";
 import DiaryEditor from "./DiaryEditor";
@@ -51,18 +51,21 @@ function App() {
     getData();
   }, []);
 
-  const onCreate = (author: string, content: string, emotion: number) => {
-    const created_date = new Date().getTime();
-    const newItem = {
-      author,
-      content,
-      emotion,
-      created_date,
-      id: dataId.current,
-    };
-    dataId.current += 1;
-    setData([newItem, ...data]);
-  };
+  const onCreate = useCallback(
+    (author: string, content: string, emotion: number) => {
+      const created_date = new Date().getTime();
+      const newItem = {
+        author,
+        content,
+        emotion,
+        created_date,
+        id: dataId.current,
+      };
+      dataId.current += 1;
+      setData((data) => [newItem, ...data]); //아이템을 추가한 데이터를 리턴
+    },
+    [] //빈 배열로 전송하면 new 아이템 추가하면 리스트에 하나만 남게됨 , 함수형 업데이트 사용
+  );
 
   const onRemove = (targetId: number): void => {
     const newDiaryList = data.filter((it) => it.id !== targetId);
