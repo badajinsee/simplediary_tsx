@@ -1,5 +1,5 @@
 /* eslint-disable*/
-// 실습용 테스트
+// 실습용 테스트 | React.memo
 
 import React, { useEffect, useState } from "react";
 

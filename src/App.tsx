@@ -67,18 +67,18 @@ function App() {
     [] //빈 배열로 전송하면 new 아이템 추가하면 리스트에 하나만 남게됨 , 함수형 업데이트 사용
   );
 
-  const onRemove = (targetId: number): void => {
-    const newDiaryList = data.filter((it) => it.id !== targetId);
-    setData(newDiaryList);
-  };
+  const onRemove = useCallback((targetId: number): void => {
+    // const newDiaryList = data.filter((it) => it.id !== targetId);
+    setData((data) => data.filter((it) => it.id !== targetId));
+  }, []);
 
-  const onEdit = (targetId: number, newContent: string): void => {
-    setData(
+  const onEdit = useCallback((targetId: number, newContent: string): void => {
+    setData((data) =>
       data.map((it) =>
         it.id === targetId ? { ...it, content: newContent } : it
       )
     );
-  };
+  }, []);
 
   // 감정 비율, usememo이용해서 리렌더링 줄이기
   const getDiaryAnalysis = useMemo(() => {

@@ -3,11 +3,14 @@ import styled from "styled-components";
 
 import { Diary } from "./types";
 import { DiaryActions } from "./types";
-import { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface DiaryItemProps extends Diary, DiaryActions {}
 
 const DiaryItem = (props: DiaryItemProps) => {
+  useEffect(() => {
+    console.log(`${props.id}번 째 아이템 렌더`);
+  });
   // 기본값을 false로
   const [isEdit, setIsEdit] = useState(false);
 
@@ -84,7 +87,7 @@ const DiaryItem = (props: DiaryItemProps) => {
   );
 };
 
-export default DiaryItem;
+export default React.memo(DiaryItem);
 
 const DiaryItem_Container = styled.div`
   background-color: rgb(240, 240, 240);
