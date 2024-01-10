@@ -65,7 +65,6 @@ function App() {
   };
 
   const onRemove = (targetId: number): void => {
-    console.log(`${targetId}가 삭제되었습니다.`);
     const newDiaryList = data.filter((it) => it.id !== targetId);
     setData(newDiaryList);
   };
@@ -78,13 +77,13 @@ function App() {
     );
   };
 
-  // 감정 비율, usememo이용해서 리랜더링 줄이기
+  // 감정 비율, usememo이용해서 리렌더링 줄이기
   const getDiaryAnalysis = useMemo(() => {
     const goodCount = data.filter((it) => it.emotion >= 3).length;
     const badCount = data.length - goodCount;
     const goodRatio = (goodCount / data.length) * 100;
     return { goodCount, badCount, goodRatio };
-  }, [data.length]); // 데이터 길이가 변화할때만 리랜더링
+  }, [data.length]); // 데이터 길이가 변화할때만 리렌더링
 
   const { goodCount, badCount, goodRatio } = getDiaryAnalysis;
 
