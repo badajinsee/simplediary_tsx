@@ -1,12 +1,18 @@
 /* eslint-disable*/
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { DiaryDispatchContext } from "./App";
 
-type DiaryEditorProps = {
-  onCreate: (author: string, content: string, emotion: number) => void;
-};
+// type DiaryEditorProps = {
+//   onCreate: (author: string, content: string, emotion: number) => void;
+// };
 
-const DiaryEditor: React.FC<DiaryEditorProps> = ({ onCreate }) => {
+const DiaryEditor = () => {
+  const context = useContext(DiaryDispatchContext);
+
+  // onCreate 함수가 있을 경우에만 가져오기
+  const onCreate = context && context.onCreate;
+
   useEffect(() => {
     console.log("diaryeditior 랜더");
   });
@@ -40,7 +46,11 @@ const DiaryEditor: React.FC<DiaryEditorProps> = ({ onCreate }) => {
       contentInput.current.focus();
       return;
     }
-    onCreate(state.author, state.content, state.emotion);
+    // `onCreate` 함수가 있을 경우에만 호출
+    if (onCreate) {
+      onCreate(state.author, state.content, state.emotion);
+    }
+    // onCreate(state.author, state.content, state.emotion);
     alert("일기 저장 완료");
     setState({
       author: "",

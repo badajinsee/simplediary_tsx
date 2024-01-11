@@ -2,12 +2,21 @@
 import styled from "styled-components";
 
 import { Diary } from "./types";
-import { DiaryActions } from "./types";
-import React, { useEffect, useRef, useState } from "react";
+import { DiaryDispatchContext } from "./App";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
-interface DiaryItemProps extends Diary, DiaryActions {}
+const DiaryItem = (props: Diary) => {
+  //일기의 수정 및 삭제 기능을 제어하는 함수들(onRemove, onEdit)을 DiaryDispatchContext에서 가져오는 역할
+  const dispatch = useContext(DiaryDispatchContext);
 
-const DiaryItem = (props: DiaryItemProps) => {
+  //dispatch가 undefined나 null 등 falsy한 값이면 에러를 발생시키는 코드
+  if (!dispatch) {
+    throw new Error("Cannot find DiaryDispatchContext");
+  }
+
+  //dispatch 객체에서 onRemove, onEdit 함수를 추출하는 구조 분해 할당
+  const { onRemove, onEdit } = dispatch;
+
   useEffect(() => {
     console.log(`${props.id}번 째 아이템 렌더`);
   });
@@ -36,7 +45,7 @@ const DiaryItem = (props: DiaryItemProps) => {
       return;
     }
     if (window.confirm(`${props.id}번 째 일기를 수정하시겠습니까?`))
-      props.onEdit(props.id, localContent);
+      onEdit(props.id, localContent);
     toggleIsEdit();
   };
 
@@ -45,7 +54,7 @@ const DiaryItem = (props: DiaryItemProps) => {
       props.id !== undefined &&
       window.confirm(`${props.id}번째 일기를 정말 삭제하시겠습니까?`)
     ) {
-      props.onRemove(props.id);
+      onRemove(props.id);
     }
   };
   return (
